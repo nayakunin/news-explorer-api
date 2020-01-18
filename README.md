@@ -2,8 +2,7 @@
 ---
 This project is a graduation work in Yandex.Praktikum web-development course.
 ## Demo
-<api.nayakunin-news-explorer.ru>
-
+<http://api.nayakunin-news-explorer.ru>
 ## Instalation
 - To download this project on your machine run
 `git clone https://github.com/nayakunin/news-explorer-api.git`
