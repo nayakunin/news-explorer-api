@@ -14,7 +14,7 @@ articleRouter.post('/', celebrate({
     keyword: Joi.string().required(),
     title: Joi.string().required(),
     text: Joi.string().required(),
-    data: Joi.string().required(),
+    date: Joi.string().required(),
     source: Joi.string().required(),
     link: Joi.string().required(),
     image: Joi.string().required(),
@@ -22,7 +22,7 @@ articleRouter.post('/', celebrate({
 }), createArticle);
 
 articleRouter.delete('/:articleId', celebrate({
-  body: Joi.object().keys({
+  params: Joi.object().keys({
     articleId: Joi.string().required(),
   }),
 }), deleteArticleById);
