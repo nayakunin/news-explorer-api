@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/not-found-err');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUserById = (req, res, next) => {
-  User.find({ _id: req.body.id })
+  User.find({ _id: req.user })
     .then((user) => {
       if (!user.length) {
         throw new NotFoundError('User does not exist');
