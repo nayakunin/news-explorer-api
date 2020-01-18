@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { NODE_ENV, PORT = 3000, MONGODB_SERVER_ADDRESS } = process.env;
 
 const app = express();
 
@@ -18,7 +18,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/newsdb', {
+mongoose.connect(NODE_ENV === 'production' ? MONGODB_SERVER_ADDRESS : 'mongodb://localhost:27017/newsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
