@@ -18,7 +18,7 @@ module.exports.deleteArticleById = (req, res, next) => {
   Article.findOne({ _id: req.params.articleId, owner: req.user._id })
     .then((article) => {
       if (!article) {
-        throw new NotFoundError('Статья не найдена');
+        throw new NotFoundError('Article is not found');
       }
       Article.findByIdAndRemove(req.params.articleId)
         .then((result) => res.send({ data: result }))
