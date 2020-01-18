@@ -4,13 +4,13 @@ const NotFoundError = require('../errors/not-found-err');
 
 module.exports.getArticlesByUserId = (req, res, next) => {
   Article.find({ owner: req.user })
-    .then((articles) => res.send({ data: articles }))
+    .then((articles) => res.status(200).send({ data: articles }))
     .catch(next);
 };
 
 module.exports.createArticle = (req, res, next) => {
   Article.create({ ...req.body, owner: req.user })
-    .then((article) => res.send({ data: article }))
+    .then((article) => res.status(201).send({ data: article }))
     .catch(next);
 };
 
