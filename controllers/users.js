@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const NotFoundError = require('../errors/not-found-err');
+const error = require('../responses');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -10,7 +11,7 @@ module.exports.getUserById = (req, res, next) => {
   User.find({ _id: req.user })
     .then((user) => {
       if (!user.length) {
-        throw new NotFoundError('User does not exist');
+        throw new NotFoundError(error.userDoesNotExist);
       }
       res.send({ data: user });
     })

@@ -1,6 +1,7 @@
 const Article = require('../models/article');
 
 const NotFoundError = require('../errors/not-found-err');
+const error = require('../responses');
 
 module.exports.getArticlesByUserId = (req, res, next) => {
   Article.find({ owner: req.user })
@@ -18,7 +19,7 @@ module.exports.deleteArticleById = (req, res, next) => {
   Article.findOne({ _id: req.params.articleId, owner: req.user._id })
     .then((article) => {
       if (!article) {
-        throw new NotFoundError('Article is not found');
+        throw new NotFoundError(error.articleNotFound);
       }
       Article.findByIdAndRemove(req.params.articleId)
         .then((result) => res.send({ data: result }))
