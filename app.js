@@ -15,6 +15,8 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const mainErrorHandler = require('./main_error_handler');
+const rateLimiter = require('./rate-limiter');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +31,10 @@ mongoose.connect(NODE_ENV === 'production' ? MONGODB_SERVER_ADDRESS : 'mongodb:/
 app.use(helmet());
 
 app.use(requestLogger);
+
+app.set('trust proxy', 1);
+
+app.use(rateLimiter);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
