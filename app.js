@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
 require('dotenv').config();
 
-const { NODE_ENV, PORT = 3000, MONGODB_SERVER_ADDRESS } = process.env;
+const { PORT = 3000, MONGODB_SERVER_ADDRESS = 'mongodb://localhost:27017/newsdb' } = process.env;
 
 const app = express();
 
@@ -21,7 +21,7 @@ const rateLimiter = require('./rate-limiter');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(NODE_ENV === 'production' ? MONGODB_SERVER_ADDRESS : 'mongodb://localhost:27017/newsdb', {
+mongoose.connect(MONGODB_SERVER_ADDRESS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
