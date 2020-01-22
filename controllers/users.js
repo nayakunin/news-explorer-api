@@ -48,9 +48,11 @@ module.exports.login = (req, res, next) => {
       res.cookie('jwt', token, { httpOnly: true });
       const { _id, name } = user;
       res.status(200).send({
-        _id,
-        email,
-        name,
+        user: {
+          _id,
+          email,
+          name,
+        },
         token,
       });
     })
