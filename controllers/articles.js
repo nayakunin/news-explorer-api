@@ -12,7 +12,30 @@ module.exports.getArticlesByUserId = (req, res, next) => {
 
 module.exports.createArticle = (req, res, next) => {
   Article.create({ ...req.body, owner: req.user })
-    .then((article) => res.status(201).send({ data: article }))
+    .then((article) => {
+      const {
+        _id,
+        keyword,
+        title,
+        date,
+        source,
+        link,
+        image,
+      } = article;
+      res.status(201).send(
+        {
+          data: {
+            _id,
+            keyword,
+            title,
+            date,
+            source,
+            link,
+            image,
+          },
+        },
+      );
+    })
     .catch(next);
 };
 
