@@ -5,12 +5,13 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const error = require('../responses');
 
-const { JWT_SECRET = 'dev-secret' } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
+const { configJWTSecret } = require('../config');
 
 module.exports.getUserById = (req, res, next) => {
-  User.find({ _id: req.user })
+  User.findById(req.user)
     .then((user) => {
-      if (!user.length) {
+      if (!user) {
         throw new NotFoundError(error.userDoesNotExist);
       }
       res.send({ data: user });
@@ -27,7 +28,10 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      const { _id } = user;
+      res.status(201).send({ _id, email, name });
+    })
     .catch((next));
 };
 
@@ -38,11 +42,17 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        JWT_SECRET,
+        NODE_ENV === 'production' ? JWT_SECRET : configJWTSecret,
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, { httpOnly: true });
-      res.status(201).send({ user, token });
+      const { _id, name } = user;
+      res.status(200).send({
+        _id,
+        email,
+        name,
+        token,
+      });
     })
     .catch(next);
 };
