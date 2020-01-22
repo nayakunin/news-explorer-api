@@ -3,8 +3,9 @@ const error = {
   userDoesNotExist: 'User does not exist',
   noAuth: 'Authorization is needed',
   singin: 'Wrong email or password',
-  resourceNotFound: 'Server can not find the requested resource',
   serverInternal: 'Server error',
+  forbidden: 'Forbidden',
+  notFound: 'Not found',
 };
 
 module.exports = error;
