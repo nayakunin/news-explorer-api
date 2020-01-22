@@ -1,6 +1,7 @@
 const Article = require('../models/article');
 
 const NotFoundError = require('../errors/not-found-err');
+const ForbiddenError = require('../errors/forbidden-err');
 const error = require('../responses');
 
 module.exports.getArticlesByUserId = (req, res, next) => {
@@ -16,14 +17,17 @@ module.exports.createArticle = (req, res, next) => {
 };
 
 module.exports.deleteArticleById = (req, res, next) => {
-  Article.findOne({ _id: req.params.articleId, owner: req.user._id })
-    .then((article) => {
-      if (!article) {
-        throw new NotFoundError(error.articleNotFound);
+  Article.findById(req.params.articleId).select('+owner')
+    .then((response) => {
+      if (!response) {
+        throw new NotFoundError(error.notFound);
+      } else if (String(response.owner) !== req.user._id) {
+        throw new ForbiddenError(error.forbidden);
+      } else {
+        Article.findByIdAndRemove(req.params.articleId)
+          .then((result) => res.status(200).send({ data: result }))
+          .catch(next);
       }
-      Article.findByIdAndRemove(req.params.articleId)
-        .then((result) => res.send({ data: result }))
-        .catch(next);
     })
     .catch(next);
 };
