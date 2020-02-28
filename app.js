@@ -12,7 +12,6 @@ const app = express();
 
 const routes = require('./routes/index');
 
-const { cors } = require('./middlewares/CORS');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const mainErrorHandler = require('./main_error_handler');
 const rateLimiter = require('./rate-limiter');
@@ -34,8 +33,6 @@ app.use(requestLogger);
 app.set('trust proxy', 1);
 
 app.use(rateLimiter);
-
-app.use(cors);
 
 app.use('/', routes);
 
