@@ -4,7 +4,7 @@ const allowedCors = [
   // 'https://nayakunin-news-explorer.ru',
   // 'http://nayakunin-news-explorer.ru',
   // 'https://nayakunin.github.io',
-  'localhost:8000',
+  'http://localhost:8000',
 ];
 
 routerCors.use((req, res, next) => {
