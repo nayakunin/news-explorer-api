@@ -2,7 +2,8 @@ module.exports = (req, res, next) => {
   const allowedCors = [
     'https://nayakunin-news-explorer.ru',
     'http://nayakunin-news-explorer.ru',
-    'http://localhost:8000',
+    'https://nayakunin.github.io',
+    'localhost:8000',
   ];
 
   const { origin } = req.headers;
