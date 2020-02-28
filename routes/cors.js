@@ -1,9 +1,9 @@
 const routerCors = require('express').Router();
 
 const allowedCors = [
-  // 'https://nayakunin-news-explorer.ru',
-  // 'http://nayakunin-news-explorer.ru',
-  // 'https://nayakunin.github.io',
+  'https://nayakunin-news-explorer.ru',
+  'http://nayakunin-news-explorer.ru',
+  'https://nayakunin.github.io',
   'http://localhost:8080',
 ];
 
