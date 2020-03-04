@@ -19,22 +19,22 @@ const error = require('../responses');
 //   'http://localhost:8080',
 // ];
 
-// const options = {
-//   origin: '*',
-//   methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-//   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-//   preflightContinue: true,
-// };
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  preflightContinue: true,
+};
 
-router.options('*', cors());
-router.post('/signin', cors(), checkSignIn, login);
-router.post('/signup', cors(), checkSignUp, createUser);
+router.options('*', cors(corsOptions));
+router.post('/signin', cors(corsOptions), checkSignIn, login);
+router.post('/signup', cors(corsOptions), checkSignUp, createUser);
 
 router.use(auth);
 
-router.use('/users', cors(), userRouter);
-router.use('/articles', cors(), articleRouter);
-router.use('*', cors(), () => {
+router.use('/users', cors(corsOptions), userRouter);
+router.use('/articles', cors(corsOptions), articleRouter);
+router.use('*', cors(corsOptions), () => {
   throw new NotFoundError(error.notFound);
 });
 
