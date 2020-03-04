@@ -12,21 +12,15 @@ const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/not-found-err');
 const error = require('../responses');
 
-const whitelist = [
-  'https://nayakunin-news-explorer.ru',
-  'http://nayakunin-news-explorer.ru',
-  'https://nayakunin.github.io',
-  'http://localhost:8080',
-];
+// const whitelist = [
+//   'https://nayakunin-news-explorer.ru',
+//   'http://nayakunin-news-explorer.ru',
+//   'https://nayakunin.github.io',
+//   'http://localhost:8080',
+// ];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',
   methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   preflightContinue: true,
