@@ -11,7 +11,7 @@ const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/not-found-err');
 const error = require('../responses');
 
-router.use('/', corsRouter);
+router.options('*', corsRouter);
 
 router.post('/signin', checkSignIn, login);
 router.post('/signup', checkSignUp, createUser);
