@@ -16,6 +16,8 @@ routerCors.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE');
   }
 
+  res.status(204).send();
+
   next();
 });
 
